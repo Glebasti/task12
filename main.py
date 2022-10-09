@@ -1,16 +1,44 @@
-# This is a sample Python script.
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from random import randint
+from time import time
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+array = [0] * 1_000_000
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def pull_integer_data(array):
+    for i in range(len(array)):
+        array[i] = randint(0, 999)
+    return array
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+array = pull_integer_data(array)
+
+
+def calcHist(tdata):
+    hist = [0] * 10
+    for data in tdata:
+        hist[data // 100] += 1
+    return hist
+
+
+a = calcHist(array)
+print(a)
+
+count_time = [0] * 100
+
+for i in range(100):
+    start = time()
+    calcHist(array)
+    end = time()
+    count_time[i] = end - start
+
+mean_time = 0
+# Расчёт среднего времени
+for i in range(100):
+    mean_time += count_time[i]
+
+print(f"Минимальное время: {min(count_time)}")
+print(f"Среднее время: {mean_time / 100}")
+print(f"Максимальное время: {max(count_time)}")
